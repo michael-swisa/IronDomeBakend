@@ -47,9 +47,6 @@ namespace IronDoneServer
                 if (ironChez.AmountMissiles <= 2)
                 {
                     Thread.CurrentThread.Priority = ThreadPriority.Lowest;
-                    Console.WriteLine(
-                        Thread.CurrentThread.Name + " " + Thread.CurrentThread.Priority
-                    );
                 }
                 else
                 {
