@@ -26,6 +26,15 @@ namespace IronDoneServer
             { "Fatah", "IronDoneChez" }
         };
 
+        // Dictionary for
+        Dictionary<string, int> dictDamage = new Dictionary<string, int>()
+        {
+            { "Kasam", 50 },
+            { "grad", 104 },
+            { "zalal", 150 },
+            { "Fatah", 100 }
+        };
+
         public MissileHandler(
             WebSocketServer wss,
             ConcurrentQueue<Missile> missilesQueueDone,
@@ -40,6 +49,8 @@ namespace IronDoneServer
         protected override void OnMessage(MessageEventArgs e)
         {
             Missile mis = JsonSerializer.Deserialize<Missile>(e.Data);
+
+            mis.Damage = dictDamage[mis.Name];
 
             switch (WhoIntercepted[mis.Name])
             {

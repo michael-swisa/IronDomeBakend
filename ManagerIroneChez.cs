@@ -23,7 +23,7 @@ namespace IronDoneServer
             this._ironDomeSemaphore = new SemaphoreSlim(IronChezList.Count);
         }
 
-        List<string> IronChezList = new List<string>() { "IronDoneChez1", "IronDoneChez2", };
+        List<string> IronChezList = new List<string>() { "IronChez1", "IronChez2", };
 
         public void Start()
         {
@@ -58,10 +58,12 @@ namespace IronDoneServer
                     bool result = await ironChez.handleMissile(mis);
                     var message = new
                     {
+                        Id = mis.Id,
                         Missile = mis.Name,
                         intercepted = result,
                         by = ironChez.Name,
-                        remaining = ironChez.AmountMissiles
+                        remaining = ironChez.AmountMissiles,
+                        Damage = mis.Damage
                     };
                     Console.WriteLine(message.ToString());
                     var json = JsonSerializer.Serialize(message);

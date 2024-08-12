@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using WebSocketSharp.Server;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace IronDoneServer
 {
@@ -24,7 +25,7 @@ namespace IronDoneServer
             this._ironDomeSemaphore = new SemaphoreSlim(IronDomeList.Count);
         }
 
-        List<string> IronDomeList = new List<string>() { "IronDoneDone1", "IronDoneDone2", };
+        List<string> IronDomeList = new List<string>() { "IronDone1", "IronDone2", };
 
         public void Start()
         {
@@ -48,7 +49,6 @@ namespace IronDoneServer
                 if (ironDone.AmountMissiles <= 2)
                 {
                     Thread.CurrentThread.Priority = ThreadPriority.Lowest;
-                    ;
                 }
                 else
                 {
@@ -60,10 +60,12 @@ namespace IronDoneServer
                     bool result = await ironDone.handleMissile(mis);
                     var message = new
                     {
+                        Id = mis.Id,
                         Missile = mis.Name,
                         intercepted = result,
                         by = ironDone.Name,
-                        remaining = ironDone.AmountMissiles
+                        remaining = ironDone.AmountMissiles,
+                        Damage = mis.Damage
                     };
                     Console.WriteLine(message.ToString());
 
